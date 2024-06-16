@@ -2,9 +2,21 @@ import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ChevronLeftIcon } from '@radix-ui/react-icons'
+import {TodoItem} from '@/app/components/chapter-02/todo-item'
+import {TodoCollection} from '@/app/components/chapter-02/todo-clollection'
 
 export default function Chapter02() {
-    console.log('First output')
+    const todos = [
+        new TodoItem(1, 'Buy Flowers'),
+        new TodoItem(2, 'Get Shoes'),
+        new TodoItem(3, 'Collect tickets'),
+        new TodoItem(4, 'Call Joe'),
+    ]
+
+    const collection = new TodoCollection('Adam', todos)
+    const newId = collection.addTodo('Go for run')
+    const todoItem = collection.getTodoById(newId)
+
     return (
         <React.Fragment>
             <section className="container mx-auto">
@@ -26,6 +38,12 @@ export default function Chapter02() {
                     <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
                         <div className="flex-1 lg:max-w-2xl"> </div>
                     </div>
+                </div>
+                <div className="text-2xl">
+                    {collection.userName}s Todo List
+                </div>
+                <div className="my-2 tracking-tight">
+                    {todoItem?.printDetails()}
                 </div>
             </section>
         </React.Fragment>

@@ -23,9 +23,7 @@ export class TodoItem {
         public complete: boolean = false,
     ) {}
 
-    printDetails(): void {
-        console.log(
-            `${this.id} ${this.task} ${this.complete ? this.complete : ''}`,
-        )
+    printDetails(): string {
+        return `${this.id} ${this.task} ${this.complete ? this.complete : ''}`
     }
 }
