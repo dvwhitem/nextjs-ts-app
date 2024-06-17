@@ -24,6 +24,6 @@ export class TodoItem {
     ) {}
 
     printDetails(): string {
-        return `${this.id} ${this.task} ${this.complete ? this.complete : ''}`
+        return `${this.id} ${this.task} ${this.complete ? '(complete)' : ''}`
     }
 }

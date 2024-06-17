@@ -10,12 +10,13 @@ export default function Chapter02() {
         new TodoItem(1, 'Buy Flowers'),
         new TodoItem(2, 'Get Shoes'),
         new TodoItem(3, 'Collect tickets'),
-        new TodoItem(4, 'Call Joe'),
+        new TodoItem(4, 'Call Joe', true),
     ]
 
-    const collection = new TodoCollection('Adam', todos)
-    const newId = collection.addTodo('Go for run')
-    const todoItem = collection.getTodoById(newId)
+    const collection: TodoCollection = new TodoCollection('Adam', todos)
+    // const newId = collection.addTodo('Go for run')
+    // const todoItem = collection.getTodoById(newId)
+    const result = collection.getTodoItems(true).map(value => value.printDetails())
 
     return (
         <React.Fragment>
@@ -43,7 +44,7 @@ export default function Chapter02() {
                     {collection.userName}s Todo List
                 </div>
                 <div className="my-2 tracking-tight">
-                    {todoItem?.printDetails()}
+                    {result.map(value => <div key={value}>{value}</div>)}
                 </div>
             </section>
         </React.Fragment>
