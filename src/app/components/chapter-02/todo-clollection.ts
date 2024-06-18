@@ -1,4 +1,9 @@
-import {TodoItem} from '@/app/components/chapter-02/todo-item'
+import { TodoItem } from '@/app/components/chapter-02/todo-item'
+
+type ItemCounts = {
+    total: number
+    incomplete: number
+}
 
 export class TodoCollection {
     private nextId: number = 1
@@ -6,9 +11,9 @@ export class TodoCollection {
 
     constructor(
         public userName: string,
-        public todoItems: TodoItem[]
+        public todoItems: TodoItem[],
     ) {
-        todoItems.forEach(value => this.itemMap.set(value.id, value))
+        todoItems.forEach((value) => this.itemMap.set(value.id, value))
     }
 
     addTodo(task: string): number {
@@ -24,14 +29,30 @@ export class TodoCollection {
     }
 
     getTodoItems(includeComplete: boolean): TodoItem[] {
-        return [...this.itemMap.values()]
-            .filter(value => includeComplete || !value.complete)
+        return [...this.itemMap.values()].filter(
+            (value) => includeComplete || !value.complete,
+        )
     }
 
     markComplete(id: number, complete: boolean) {
         const todoItem = this.getTodoById(id)
-        if(todoItem) {
+        if (todoItem) {
             todoItem.complete = complete
+        }
+    }
+
+    removeComplete() {
+        this.itemMap.forEach((value) => {
+            if (value.complete) {
+                this.itemMap.delete(value.id)
+            }
+        })
+    }
+
+    getItemCounts(): ItemCounts {
+        return {
+            total: this.itemMap.size,
+            incomplete: this.getTodoItems(false).length,
         }
     }
 }

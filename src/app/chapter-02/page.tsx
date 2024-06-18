@@ -2,8 +2,29 @@ import * as React from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ChevronLeftIcon } from '@radix-ui/react-icons'
-import {TodoItem} from '@/app/components/chapter-02/todo-item'
-import {TodoCollection} from '@/app/components/chapter-02/todo-clollection'
+import inquirer from 'inquirer'
+
+import { TodoItem } from '@/app/components/chapter-02/todo-item'
+import { TodoCollection } from '@/app/components/chapter-02/todo-clollection'
+
+enum Commands {
+    Quit = 'Quit',
+}
+
+function promptUser(): void {
+    inquirer
+        .prompt({
+            type: 'list',
+            name: 'command',
+            message: 'Choose option',
+            choices: Object.values(Commands),
+        })
+        .then((answer) => {
+            if (answer['command'] != Commands.Quit) {
+                promptUser()
+            }
+        })
+}
 
 export default function Chapter02() {
     const todos = [
@@ -16,7 +37,13 @@ export default function Chapter02() {
     const collection: TodoCollection = new TodoCollection('Adam', todos)
     // const newId = collection.addTodo('Go for run')
     // const todoItem = collection.getTodoById(newId)
-    const result = collection.getTodoItems(true).map(value => value.printDetails())
+    collection.addTodo('My custom task')
+    collection.removeComplete()
+    const result = collection
+        .getTodoItems(true)
+        .map((value) => value.printDetails())
+
+    promptUser()
 
     return (
         <React.Fragment>
@@ -41,10 +68,13 @@ export default function Chapter02() {
                     </div>
                 </div>
                 <div className="text-2xl">
-                    {collection.userName}s Todo List
+                    {collection.userName}s Todo List{' '}
+                    {collection.getItemCounts().incomplete}
                 </div>
                 <div className="my-2 tracking-tight">
-                    {result.map(value => <div key={value}>{value}</div>)}
+                    {result.map((value) => (
+                        <div key={value}>{value}</div>
+                    ))}
                 </div>
             </section>
         </React.Fragment>
