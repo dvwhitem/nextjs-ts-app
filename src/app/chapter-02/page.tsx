@@ -8,10 +8,33 @@ import { TodoItem } from '@/app/components/chapter-02/todo-item'
 import { TodoCollection } from '@/app/components/chapter-02/todo-clollection'
 
 enum Commands {
-    Quit = 'Quit',
+    Toggle = 'Show/Hide Completed',
+}
+
+let showCompleted = true
+
+const todos = [
+    new TodoItem(1, 'Buy Flowers'),
+    new TodoItem(2, 'Get Shoes'),
+    new TodoItem(3, 'Collect tickets'),
+    new TodoItem(4, 'Call Joe', true),
+]
+
+const collection: TodoCollection = new TodoCollection('Adam', todos)
+// const newId = collection.addTodo('Go for run')
+// const todoItem = collection.getTodoById(newId)
+collection.addTodo('My custom task')
+collection.removeComplete()
+
+function displayTodoList() {
+    return collection
+        .getTodoItems(showCompleted)
+        .map((value) => value.printDetails())
 }
 
 function promptUser(): void {
+    console.clear()
+    displayTodoList().map(value => console.log(value))
     inquirer
         .prompt({
             type: 'list',
@@ -19,32 +42,18 @@ function promptUser(): void {
             message: 'Choose option',
             choices: Object.values(Commands),
         })
-        .then((answer) => {
-            if (answer['command'] != Commands.Quit) {
-                promptUser()
+        .then((answers) => {
+            switch (answers['command']) {
+                case Commands.Toggle:
+                    showCompleted = !showCompleted
+                    promptUser()
+                    break
             }
         })
 }
 
+promptUser()
 export default function Chapter02() {
-    const todos = [
-        new TodoItem(1, 'Buy Flowers'),
-        new TodoItem(2, 'Get Shoes'),
-        new TodoItem(3, 'Collect tickets'),
-        new TodoItem(4, 'Call Joe', true),
-    ]
-
-    const collection: TodoCollection = new TodoCollection('Adam', todos)
-    // const newId = collection.addTodo('Go for run')
-    // const todoItem = collection.getTodoById(newId)
-    collection.addTodo('My custom task')
-    collection.removeComplete()
-    const result = collection
-        .getTodoItems(true)
-        .map((value) => value.printDetails())
-
-    promptUser()
-
     return (
         <React.Fragment>
             <section className="container mx-auto">
@@ -72,7 +81,7 @@ export default function Chapter02() {
                     {collection.getItemCounts().incomplete}
                 </div>
                 <div className="my-2 tracking-tight">
-                    {result.map((value) => (
+                    {displayTodoList().map((value) => (
                         <div key={value}>{value}</div>
                     ))}
                 </div>
