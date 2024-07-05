@@ -40,45 +40,9 @@ export default function Home() {
                             how to leverage these powerful tools to build more
                             efficient and maintainable applications.
                         </p>
-                        <Collapsible className="mt-4">
-                            <CollapsibleTrigger className="inline-flex items-center text-sm font-medium text-primary transition-colors hover:text-primary/80">
-                                Read More{' '}
-                                <ChevronDownIcon className="ml-1 h-4 w-4 transition-transform group-[&[data-state=open]]:rotate-180" />
-                            </CollapsibleTrigger>
-                            <CollapsibleContent className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                                <p>
-                                    React Hooks have revolutionized the way
-                                    developers approach building user
-                                    interfaces. These powerful tools allow you
-                                    to write more concise, reusable, and
-                                    testable code, while eliminating the need
-                                    for class components.
-                                </p>
-                                <p className="mt-4">
-                                    In this comprehensive guide, we\'ll dive
-                                    deep into the world of React Hooks. We\'ll
-                                    explore the core Hooks provided by React,
-                                    such as `useState`, `useEffect`, and
-                                    `useContext`, and learn how to leverage them
-                                    to build more efficient and maintainable
-                                    applications.
-                                </p>
-                                <p className="mt-4">
-                                    Additionally, we\'ll cover custom Hooks,
-                                    which allow you to encapsulate complex logic
-                                    and share it across your application. We\'ll
-                                    also discuss best practices, common
-                                    pitfalls, and strategies for optimizing your
-                                    use of Hooks.
-                                </p>
-                                <p className="mt-4">
-                                    By the end of this guide, you\'ll have a
-                                    deep understanding of React Hooks and be
-                                    equipped to harness their power to build
-                                    exceptional user experiences.
-                                </p>
-                            </CollapsibleContent>
-                        </Collapsible>
+                        <div className="mt-4">
+                            <a href={'/chapter-03'}>Read More</a>
+                        </div>
                     </div>
                 </div>
                 <div className="group rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:border-gray-300 hover:shadow-md dark:border-gray-800 dark:bg-gray-950">
